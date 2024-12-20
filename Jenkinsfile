@@ -1,9 +1,11 @@
 pipeline {
-    agent jenkinsslave
+    agent { node { label 'jenkinsslave' } } 
+    // or
+    // agent { label 'jenkinsslave' }
 
     tools {
         // Install the Maven version configured as "M3" and add it to the path.
-        maven "M3"
+        maven "my_maven"
     }
 
     stages {
@@ -13,7 +15,7 @@ pipeline {
                 git 'https://github.com/mukeshjadav7696/DevOpsClassCodes.git'
 
                 // Run Maven on a Unix agent.
-                sh "mvn -Dmaven.test.failure.ignore=true clean Install"
+                sh "mvn -Dmaven.test.failure.ignore=true clean install"
 
                 // To run Maven on a Windows agent, use
                 // bat "mvn -Dmaven.test.failure.ignore=true clean package"
